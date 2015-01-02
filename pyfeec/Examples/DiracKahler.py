@@ -26,7 +26,7 @@ for i, i_skel in enumerate(sc):
     for j, j_skel in enumerate(sc):
         j_interior = j_skel.interior
         if j == i - 1:
-            k.append(j_skel.exterior_derivative[i_interior, :][:, j_interior])
+            k.append(sc[j + 1].star.dot(j_skel.exterior_derivative)[i_interior, :][:, j_interior])
         elif j == i + 1:
             k.append((-1) ** dim * j_skel.codifferential[i_interior, :][:, j_interior])
         else:
@@ -35,7 +35,7 @@ for i, i_skel in enumerate(sc):
 
 K = bmat(K)
 
-val0 = eigvals(K.todense())
+val0 = eigvals(K.asarray())
 eigenvalues = [val.real for val in val0 if val.real > .9 and abs(val.imag) < 0.1]
 eigenvalues.sort()
 
