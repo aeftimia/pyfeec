@@ -8,7 +8,7 @@ from itertools import combinations
 from functools import reduce
 from operator import or_
 
-from .form_utils import wedge, naive_derham_map
+from .form_utils import wedge
 from .grid_utils import stitch
 from .parallel import parmapreduce, parmap
 from .circumcenter cimport compute_circumcenter
