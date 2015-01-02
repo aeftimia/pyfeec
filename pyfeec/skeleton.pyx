@@ -58,7 +58,7 @@ class Skeleton(_Skeleton):
         elif attr == "laplace_derham":
             self.laplace_derham = self.laplace_beltrami.copy()
             if self.dim:
-                self.laplace_derham = self.laplace_derham + self.complex[self.dim - 1].exterior_derivative.dot(self.star).dot(self.complex[self.dim - 1].exterior_derivative.T)
+                self.laplace_derham = self.laplace_derham + self.star.dot(self.complex[self.dim - 1].exterior_derivative).dot(self.inverse_star).dot(self.complex[self.dim].codifferential)
             return self.laplace_derham
         else:
             raise AttributeError(attr + " not found")
