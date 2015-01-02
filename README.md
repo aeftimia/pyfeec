@@ -155,7 +155,6 @@ This can be specified in the form of one of the following:
 * a DxD array: for a homogeneous complex. This metric is assumed to be constant throughout the complex.
 * a D array: for a homogenous complex with a diagonal metric.
 
-```
 #de Rham maps
 The de Rham map returns a two element list containing the average of the input function over the domain of each simplex in the complex.
 See http://arxiv.org/abs/1405.7879 for more on this process.
