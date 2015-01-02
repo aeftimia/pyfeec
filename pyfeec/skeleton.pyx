@@ -45,7 +45,7 @@ class Skeleton(_Skeleton):
             return self.star
         elif attr == "codifferential":
             if self.dim:
-                self.codifferential = self.complex[self.dim - 1].exterior_derivative.T).dot(self.star)
+                self.codifferential = self.complex[self.dim - 1].exterior_derivative.T.dot(self.star)
             else:
                 self.codifferential = zeros(self.num_simplices)
             return self.codifferential
