@@ -1,5 +1,5 @@
 __all__ = ['SimplicialComplex']
-from numpy import asarray, arange, empty, identity, vstack, atleast_2d, ones
+from numpy import asarray, arange, empty, identity, vstack, atleast_2d, ones, diag
 from itertools import product
 from scipy.sparse import csr_matrix
 from scipy.linalg import solve
@@ -15,7 +15,7 @@ from numpy cimport complex, ndarray
 class SimplicialComplex(list):
     """simplicial complex"""
         
-    def __init__(self, simplices, vertices, metrics=None, stitches={}):
+    def __init__(self, simplices, vertices, stitches={}, metrics=None):
 
         simplices.sort()
 
@@ -29,8 +29,12 @@ class SimplicialComplex(list):
         if metrics is None:
             default_metric = identity(self.embedding_dimension, dtype="complex")
             self.metrics = asarray([identity(self.embedding_dimension, dtype="complex")] * len(simplices))
-        else:
+        elif metrics.ndim == 3:
             self.metrics = metrics
+        elif metrics.ndim == 2:
+            self.metrics = asarray([metrics] * len(simplices), dtype='complex')
+        elif metrics.ndim == 1:
+            self.metrics = asarray([diag(metrics)] * len(simplices), dtype='complex')
         
         for dim in range(self.complex_dimension):
             skeleton = Skeleton()

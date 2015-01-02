@@ -43,12 +43,9 @@ class Skeleton(_Skeleton):
         elif attr == "star":
             self.star = self.sharp.conj().T.dot(self.sharp) / factorial(self.dim)
             return self.star
-        elif attr == "inverse_star":
-            self.inverse_star = inv(self.star)
-            return self.inverse_star
         elif attr == "codifferential":
             if self.dim:
-                self.codifferential = (-1) ** self.dim * self.complex[self.dim - 1].inverse_star.dot(self.complex[self.dim - 1].exterior_derivative.T).dot(self.star)
+                self.codifferential = self.complex[self.dim - 1].exterior_derivative.T).dot(self.star)
             else:
                 self.codifferential = zeros(self.num_simplices)
             return self.codifferential
@@ -61,7 +58,7 @@ class Skeleton(_Skeleton):
         elif attr == "laplace_derham":
             self.laplace_derham = self.laplace_beltrami.copy()
             if self.dim:
-                self.laplace_derham = self.laplace_derham + self.complex[self.dim - 1].exterior_derivative.toarray().dot(self.codifferential)
+                self.laplace_derham = self.laplace_derham + self.complex[self.dim - 1].exterior_derivative.dot(self.star).dot(self.complex[self.dim - 1].exterior_derivative.T)
             return self.laplace_derham
         else:
             raise AttributeError(attr + " not found")
